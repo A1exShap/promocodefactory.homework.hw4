@@ -35,6 +35,8 @@ jobs:
         
     - name: Restore dependencies
       run: dotnet restore
-      
+      working-directory: src/Otus.Teaching.PromoCodeFactory.UnitTests
+
     - name: Test
-      run: dotnet test src/Otus.Teaching.PromoCodeFactory.UnitTests/Otus.Teaching.PromoCodeFactory.UnitTests.csproj
+      run: dotnet test
+      working-directory: src/Otus.Teaching.PromoCodeFactory.UnitTests
