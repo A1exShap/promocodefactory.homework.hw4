@@ -1,42 +1,37 @@
-name: CI
+name: build and test
 
-on: [push]
+on:
+  push:
+  pull_request:
+    branches: [ main ]
+    paths:
+    - '**.cs'
+    - '**.csproj'
+
+env:
+  DOTNET_VERSION: '8.0'
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build-and-test:
+
+    name: build-and-test-${{matrix.os}}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      
+    - uses: actions/checkout@v3
     - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '3.1.301'
-        
-    - name: Restore dependencies
-      run: dotnet restore ././src/Otus.Teaching.PromoCodeFactory.sln
+        dotnet-version: ${{ env.DOTNET_VERSION }}
+
+    - name: Install dependencies
+      run: dotnet restore
       
     - name: Build
-      run: dotnet build ././src/Otus.Teaching.PromoCodeFactory.sln
-      
-  test:
-    runs-on: ubuntu-latest
+      run: dotnet build --configuration Release --no-restore
     
-    steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
-      
-    - name: Setup .NET Core
-      uses: actions/setup-dotnet@v1
-      with:
-        dotnet-version: '3.1.301'
-        
-    - name: Restore dependencies
-      run: dotnet restore ././src/Otus.Teaching.PromoCodeFactory.UnitTests/Otus.Teaching.PromoCodeFactory.UnitTests.csproj
-      working-directory: ././src/Otus.Teaching.PromoCodeFactory.UnitTests
-
     - name: Test
-      run: dotnet test ././src/Otus.Teaching.PromoCodeFactory.UnitTests/Otus.Teaching.PromoCodeFactory.UnitTests.csproj
-      working-directory: ././src/Otus.Teaching.PromoCodeFactory.UnitTests
+      run: dotnet test --no-restore --verbosity normal
