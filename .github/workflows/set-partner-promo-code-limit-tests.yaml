@@ -1,0 +1,42 @@
+name: CI
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.301'
+        
+    - name: Restore dependencies
+      run: dotnet restore ./src/Otus.Teaching.PromoCodeFactory.sln
+      
+    - name: Build
+      run: dotnet build ./src/Otus.Teaching.PromoCodeFactory.sln
+      
+  test:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+      
+    - name: Setup .NET Core
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: '3.1.301'
+        
+    - name: Restore dependencies
+      run: dotnet restore ./src/Otus.Teaching.PromoCodeFactory.UnitTests/Otus.Teaching.PromoCodeFactory.UnitTests.csproj
+      working-directory: ./src/Otus.Teaching.PromoCodeFactory.UnitTests
+
+    - name: Test
+      run: dotnet test ./src/Otus.Teaching.PromoCodeFactory.UnitTests/Otus.Teaching.PromoCodeFactory.UnitTests.csproj
+      working-directory: ./src/Otus.Teaching.PromoCodeFactory.UnitTests
