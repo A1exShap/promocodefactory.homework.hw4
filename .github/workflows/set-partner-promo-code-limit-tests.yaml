@@ -16,10 +16,10 @@ jobs:
         dotnet-version: '3.1.301'
         
     - name: Restore dependencies
-      run: dotnet restore src/Otus.Teaching.PromoCodeFactory.sln
+      run: dotnet restore ././src/Otus.Teaching.PromoCodeFactory.sln
       
     - name: Build
-      run: dotnet build src/Otus.Teaching.PromoCodeFactory.sln
+      run: dotnet build ././src/Otus.Teaching.PromoCodeFactory.sln
       
   test:
     runs-on: ubuntu-latest
@@ -34,9 +34,9 @@ jobs:
         dotnet-version: '3.1.301'
         
     - name: Restore dependencies
-      run: dotnet restore src/Otus.Teaching.PromoCodeFactory.UnitTests/Otus.Teaching.PromoCodeFactory.UnitTests.csproj
-      working-directory: src/Otus.Teaching.PromoCodeFactory.UnitTests
+      run: dotnet restore ././src/Otus.Teaching.PromoCodeFactory.UnitTests/Otus.Teaching.PromoCodeFactory.UnitTests.csproj
+      working-directory: ././src/Otus.Teaching.PromoCodeFactory.UnitTests
 
     - name: Test
-      run: dotnet test src/Otus.Teaching.PromoCodeFactory.UnitTests/Otus.Teaching.PromoCodeFactory.UnitTests.csproj
-      working-directory: src/Otus.Teaching.PromoCodeFactory.UnitTests
+      run: dotnet test ././src/Otus.Teaching.PromoCodeFactory.UnitTests/Otus.Teaching.PromoCodeFactory.UnitTests.csproj
+      working-directory: ././src/Otus.Teaching.PromoCodeFactory.UnitTests
