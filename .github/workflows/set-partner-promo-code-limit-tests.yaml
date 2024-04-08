@@ -16,10 +16,10 @@ jobs:
         dotnet-version: '3.1.301'
         
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore .\.\src\Otus.Teaching.PromoCodeFactory.sln
       
     - name: Build
-      run: dotnet build
+      run: dotnet build .\.\src\Otus.Teaching.PromoCodeFactory.sln
       
   test:
     runs-on: ubuntu-latest
